@@ -36,23 +36,29 @@ files
 ## Processing and Data Transfromations
 All the processing and transformations applied on the data are accomplished by executing the `run_analysis.R` script. The functionality can be broken down into the following steps -
 
-**1. Environment and Data Setup**
+**1. Environment and Data Setup:**
+
 Ensure that the required packages data.table and plyr are installed and loaded in R. The script automatically downloads the source data if it is not already available and extracts it. `UCI HAR Dataset` folder is created and containes the source data.
 
-**2. Load Metadata and Data**
+**2. Load Metadata and Data:**
+
 Training and Test data for Features, Subject and Actvitiy are loaded into variables from the respective folders. The activity and Feature names from activity_labels.txt and features.txt which are our primary meta data are loaded too. (inline comments in `run_analysis.R` clearly show these steps)
 
-**3. Merge training and test data**
+**3. Merge training and test data:**
+
 The training and test data for subject, activity and features are merged separately by row first. This creates three data sets each with 10299 observations. While the subject and activity have 1 variable, the features merged set would have 561 columns. Variable names are assigned and all three data sets are combined via column binding to create a dataframe with 10299 observations and 563 columns.
         
-**4. Subset `mean` and `std` data**
+**4. Subset `mean` and `std` data:**
+
 Data set created in #3 is now subset utilizing `grep` command to select only mean and Standard Deviation data
 The tidy data set contains 180 observations with the following 81 variables. This creates a subset with 10299 observations and 81 variables.
 
-**5.  Apply descriptive activity labels**
+**5.  Apply descriptive activity labels:**
+
 Using the mapping provided in the "activity_labels.txt" metadata, the numeric activity identifiers (1 to 6) are replaced with their corresponding textual labels.
 
-**6. Format Variable names**
+**6. Format Variable names:**
+
 All variable names will be formatted to make them more descriptive and precise using the following transformation during this step.
 
 - remove parenthesis
@@ -71,10 +77,12 @@ All variable names will be formatted to make them more descriptive and precise u
 - ".std"" -> ".StandardDeviation"
 
 
-**7. Creates new tidy data set containing averages**
+**7. Creates new tidy data set containing averages:**
+
 The `ddply` command is used to summarize the data created in #6 by calculating the mean each variable grouped by activity and subject based on the data set in step 6. This results in each subject having 6 rows of data corresponding to the 6 activties. wih 30 subjects, the final tidy dataset will have 180 observations with 81 variables.
 
-**8. Output new tidy data set**
+**8. Output new tidy data set:**
+
 `write.table` is used to generate the output file `tidy_data.txt` cotnaing our result data in the repo root directory. The data dictionary for the 81 variables are listed in the next section
 
 ## Data Dictionary
